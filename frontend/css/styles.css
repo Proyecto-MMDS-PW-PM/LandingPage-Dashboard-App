@@ -109,3 +109,80 @@ footer {
 footer p {
   font-size: 0.9em;
 }
+
+/* Nuevas secciones */
+.problema {
+  background-color: #e9ecef;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.problema h3 {
+  color: #495057;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.solucion {
+  background-color: #d1ecf1;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.solucion h3 {
+  color: #0c5460;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.tecnologia {
+  background-color: #f8f9fa;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.tecnologia h3 {
+  color: #007bff;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.tecnologia ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+
+.tecnologia li {
+  margin: 10px 20px;
+  font-size: 1.1em;
+  color: #555;
+}
+
+.beneficios {
+  background-color: #d4edda;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.beneficios h3 {
+  color: #155724;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.beneficios ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+
+.beneficios li {
+  margin: 10px 20px;
+  font-size: 1.1em;
+  color: #555;
+}
