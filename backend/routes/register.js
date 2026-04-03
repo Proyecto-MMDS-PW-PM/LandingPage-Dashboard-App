@@ -3,8 +3,10 @@ const bcrypt = require('bcrypt');
 const pool = require('../db');
 
 const router = express.Router();
+console.log('loaded backend/register route');
 
 router.post('/', async (req, res) => {
+  console.log('POST /api/register body', req.body);
   const { name, nombre, email, password } = req.body;
   const userName = (name || nombre || '').trim();
 
@@ -22,14 +24,14 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const existing = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+    const existing = await pool.query('SELECT id FROM usuarios WHERE email = $1', [email]);
     if (existing.rows.length > 0) {
       return res.status(409).json({ message: 'El correo electrónico ya está registrado (duplicado).' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     await pool.query(
-      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3)',
+      'INSERT INTO usuarios (nombre, email, password) VALUES ($1, $2, $3)',
       [userName, email, hashedPassword]
     );
 
