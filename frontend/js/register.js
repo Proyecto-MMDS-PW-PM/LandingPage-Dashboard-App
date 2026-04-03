@@ -1,4 +1,6 @@
-document.getElementById('registerForm').addEventListener('submit', function(e) {
+const API_URL = 'http://localhost:3000/api';
+
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
   e.preventDefault();
 
   // Reset errors
@@ -34,7 +36,40 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
     valid = false;
   }
 
+  const registerMessage = document.getElementById('registerMessage');
+  registerMessage.textContent = '';
+  registerMessage.className = 'form-message';
+
   if (valid) {
-    alert('Formulario enviado (simulado)');
+    try {
+      const response = await fetch(`${API_URL}/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        registerMessage.textContent = result.message || 'Registro exitoso.';
+        registerMessage.classList.add('success');
+        document.getElementById('registerForm').reset();
+      } else {
+        const msg = result.message || 'Error al registrar, intenta de nuevo.';
+
+        if (msg.toLowerCase().includes('email') || msg.toLowerCase().includes('duplicado')) {
+          document.getElementById('emailError').textContent = msg;
+        } else {
+          registerMessage.textContent = msg;
+          registerMessage.classList.add('error');
+        }
+      }
+    } catch (err) {
+      registerMessage.textContent = 'No se pudo conectar con el servidor. Verifica tu conexión.';
+      registerMessage.classList.add('error');
+      console.error(err);
+    }
   }
 });
