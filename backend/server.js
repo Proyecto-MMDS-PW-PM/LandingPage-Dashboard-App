@@ -6,6 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+console.log('register module path', require.resolve('./routes/register'));
 const registerRoute = require('./routes/register');
 app.use('/api/register', registerRoute);
 
