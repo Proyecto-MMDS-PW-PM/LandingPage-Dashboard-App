@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Página de inicio de sesión">
+  <title>Iniciar sesión</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Iniciar Sesión</h1>
+      <p>Accede a tu cuenta para continuar.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="registro">
+      <div class="container">
+        <h3>Login</h3>
+        <form id="loginForm">
+          <div>
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+            <span class="error" id="emailError"></span>
+          </div>
+          <div>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" placeholder="Tu contraseña" required>
+            <span class="error" id="passwordError"></span>
+          </div>
+          <button type="submit">Iniciar sesión</button>
+          <div id="loginMessage" class="form-message"></div>
+        </form>
+        <p style="margin-top: 15px;">¿No tienes cuenta? <a href="index.html">Regístrate aquí</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 LandingPage Dashboard App.</p>
+    </div>
+  </footer>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

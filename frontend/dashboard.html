@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashboard de usuario">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="dashboard-header">
+    <div class="container">
+      <h1>Hola, Usuario</h1>
+      <p>Bienvenido a tu panel de control</p>
+      <button class="logout-button" id="logoutButton">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="dashboard-container">
+      <section class="cards-grid">
+        <article class="card">
+          <h4>Litros totales</h4>
+          <p>12,345 L</p>
+        </article>
+        <article class="card">
+          <h4>Calidad del agua</h4>
+          <p>Excelente</p>
+        </article>
+        <article class="card">
+          <h4>Estado del filtro</h4>
+          <p>Buen estado</p>
+        </article>
+        <article class="card">
+          <h4>Litros hoy</h4>
+          <p>450 L</p>
+        </article>
+      </section>
+
+      <section class="card chart-card">
+        <h4>Consumo diario (Últimos 7 días)</h4>
+        <canvas id="dashboardChart" width="800" height="320"></canvas>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Lógica para cerrar sesión
+    document.getElementById('logoutButton').addEventListener('click', function () {
+      localStorage.removeItem('token');
+      window.location.href = 'login.html';
+    });
+
+    // Configuración e inicialización de Chart.js con datos falsos
+    const ctx = document.getElementById('dashboardChart').getContext('2d');
+    const dashboardChart = new Chart(ctx, {
+      type: 'bar', // Puedes cambiar 'bar' por 'line' si prefieres un gráfico de líneas
+      data: {
+        labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+        datasets: [{
+          label: 'Litros consumidos',
+          data: [350, 420, 380, 500, 450, 600, 480], // Datos falsos
+          backgroundColor: 'rgba(0, 123, 255, 0.6)', // Azul transparente
+          borderColor: 'rgba(0, 123, 255, 1)',       // Azul sólido
+          borderWidth: 1,
+          borderRadius: 4 // Bordes ligeramente redondeados en las barras
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Litros (L)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top'
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
