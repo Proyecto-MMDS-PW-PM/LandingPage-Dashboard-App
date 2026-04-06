@@ -10,6 +10,12 @@ console.log('register module path', require.resolve('./routes/register'));
 const registerRoute = require('./routes/register');
 app.use('/api/register', registerRoute);
 
+const loginRoute = require('./routes/login');
+app.use('/api/login', loginRoute);
+
+const datosRoute = require('./routes/datos');
+app.use('/api/datos', datosRoute);
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
