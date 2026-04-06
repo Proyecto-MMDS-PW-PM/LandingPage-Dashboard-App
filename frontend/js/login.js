@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://landingpage-dashboard-app-production.up.railway.app/api';
 
 const loginForm = document.getElementById('loginForm');
 const emailError = document.getElementById('emailError');
@@ -45,7 +45,12 @@ loginForm.addEventListener('submit', async function (e) {
       body: JSON.stringify({ email, password }),
     });
 
-    const result = await response.json();
+    const result = await pool.query(
+      'INSERT INTO usuarios (nombre, email, password) VALUES ($1, $2, $3) RETURNING *',
+      [userName, email, hashedPassword]
+    );
+
+    console.log("Usuario creado:", result.rows[0]);
 
     if (response.ok && result.token) {
       localStorage.setItem('token', result.token);

@@ -43,9 +43,9 @@ router.post('/', async (req, res) => {
       [userName, email, hashedPassword]
     );
 
-    // ✅ COMMIT EXPLICITO (OBLIGATORIO EN RAILWAY POSTGRESQL)
+    // COMMIT EXPLICITO (OBLIGATORIO EN RAILWAY POSTGRESQL)
     await client.query('COMMIT;');
-    console.log('✅✅ USUARIO INSERTADO Y COMMIT REALIZADO EXITOSAMENTE:', result.rows[0]);
+    console.log('USUARIO INSERTADO Y COMMIT REALIZADO EXITOSAMENTE:', result.rows[0]);
     
     client.release();
 
