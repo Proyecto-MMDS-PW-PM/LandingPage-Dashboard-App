@@ -23,26 +23,42 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ message: 'La contraseña debe tener al menos 6 caracteres.' });
   }
 
+  let client;
   try {
-    const existing = await pool.query('SELECT id FROM usuarios WHERE email = $1', [email]);
+    // Obtener cliente individual para manejar transaccion manualmente
+    client = await pool.connect();
+    
+    await client.query('BEGIN TRANSACTION;');
+
+    const existing = await client.query('SELECT id FROM usuarios WHERE email = $1', [email]);
     if (existing.rows.length > 0) {
+      await client.query('ROLLBACK;');
+      client.release();
       return res.status(409).json({ message: 'El correo electrónico ya está registrado (duplicado).' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const result = await pool.query(
+    const result = await client.query(
       'INSERT INTO usuarios (nombre, email, password) VALUES ($1, $2, $3) RETURNING id, nombre, email',
       [userName, email, hashedPassword]
     );
 
-    console.log('USUARIO INSERTADO CORRECTAMENTE:', result.rows[0]);
+    // ✅ COMMIT EXPLICITO (OBLIGATORIO EN RAILWAY POSTGRESQL)
+    await client.query('COMMIT;');
+    console.log('✅✅ USUARIO INSERTADO Y COMMIT REALIZADO EXITOSAMENTE:', result.rows[0]);
     
+    client.release();
+
     return res.status(201).json({ 
       message: 'Registro exitoso.',
       usuario: result.rows[0] 
     });
   } catch (error) {
-    console.error('Error en /api/register:', error);
+    if (client) {
+      await client.query('ROLLBACK;');
+      client.release();
+    }
+    console.error('❌ Error en /api/register:', error);
     return res.status(500).json({ message: 'Error interno del servidor.' });
   }
 });
