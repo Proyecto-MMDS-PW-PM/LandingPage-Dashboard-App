@@ -1,6 +1,6 @@
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://landingpage-dashboard-app-production.up.railway.app/api';
 
-document.getElementById('registerForm').addEventListener('submit', async function(e) {
+document.getElementById('registerForm').addEventListener('submit', async function (e) {
   e.preventDefault();
 
   // Reset errors

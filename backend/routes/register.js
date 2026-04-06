@@ -30,12 +30,17 @@ router.post('/', async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await pool.query(
-      'INSERT INTO usuarios (nombre, email, password) VALUES ($1, $2, $3)',
+    const result = await pool.query(
+      'INSERT INTO usuarios (nombre, email, password) VALUES ($1, $2, $3) RETURNING id, nombre, email',
       [userName, email, hashedPassword]
     );
 
-    return res.status(201).json({ message: 'Registro exitoso.' });
+    console.log('USUARIO INSERTADO CORRECTAMENTE:', result.rows[0]);
+    
+    return res.status(201).json({ 
+      message: 'Registro exitoso.',
+      usuario: result.rows[0] 
+    });
   } catch (error) {
     console.error('Error en /api/register:', error);
     return res.status(500).json({ message: 'Error interno del servidor.' });
