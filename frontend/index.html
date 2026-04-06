@@ -3,7 +3,11 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AquAti - Ahorro Inteligente</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -17,43 +21,89 @@
   </header>
 
   <main>
-    <section class="reveal container">
-      <h3>¿Por qué AquAti?</h3>
-      <p>El desperdicio de agua es un problema global que AquAti soluciona mediante tecnología IoT[cite: 13, 14].</p>
-    </section>
-
-    <section class="reveal section-grey">
-      <div class="container">
-        <h3>Tecnología de Vanguardia</h3>
-        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-          <div class="card" style="padding: 30px; width: 250px;">
-            <h4>Sensores IoT</h4>
-            <p>Medición de precisión</p>
+    <section class="reveal container intro-section">
+      <div class="intro-content">
+        <h3 class="section-title">¿Por qué AquAti?</h3>
+        <p class="intro-text">El desperdicio de agua es un problema global que AquAti soluciona mediante tecnología IoT.
+        Más de <span class="highlight-text">30%</span> del agua potable se pierde diariamente en fugas sin detectar.
+        Nosotros cambiamos eso.</p>
+        
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Precisión medición</div>
           </div>
-          <div class="card" style="padding: 30px; width: 250px;">
-            <h4>Alertas WiFi</h4>
-            <p>Notificaciones al instante</p>
+          <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Monitoreo continuo</div>
           </div>
-          <div class="card" style="padding: 30px; width: 250px;">
-            <h4>App Control</h4>
-            <p>Gestiona desde tu móvil</p>
+          <div class="stat-item">
+            <div class="stat-number">-40%</div>
+            <div class="stat-label">Ahorro promedio</div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="registro" class="reveal container">
-      <div class="card" style="max-width: 500px; margin: 0 auto; padding: 40px; text-align: left;">
-        <h3 style="text-align: center; margin-bottom: 20px;">Crea tu cuenta</h3>
-        <form id="registerForm">
-          <input type="text" placeholder="Nombre completo"
-            style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
-          <input type="email" placeholder="Correo electrónico"
-            style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
-          <input type="password" placeholder="Contraseña"
-            style="width:100%; padding:12px; margin-bottom:20px; border-radius:8px; border:1px solid #ddd;">
-          <button type="submit" class="btn-registro">Registrarse</button>
-        </form>
+    <section class="reveal section-grey">
+      <div class="container">
+        <h3 class="section-title">Tecnología de Vanguardia</h3>
+        <p class="section-subtitle">Soluciones inteligentes para el control del agua</p>
+        
+        <div class="features-grid">
+          <div class="feature-card card">
+            <div class="feature-icon">📡</div>
+            <h4>Sensores IoT</h4>
+            <p>Medición de precisión en tiempo real con tecnología de última generación</p>
+          </div>
+          
+          <div class="feature-card card">
+            <div class="feature-icon">🔔</div>
+            <h4>Alertas WiFi</h4>
+            <p>Notificaciones instantáneas directamente a tu dispositivo ante cualquier anomalía</p>
+          </div>
+          
+          <div class="feature-card card">
+            <div class="feature-icon">📱</div>
+            <h4>App Control</h4>
+            <p>Gestiona y monitorea todo tu sistema desde cualquier lugar con tu móvil</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="registro" class="reveal register-section">
+      <div class="container">
+        <div class="register-card card-glow">
+          <div class="register-header">
+            <div class="icon-box">🚀</div>
+            <h3>Comienza hoy mismo</h3>
+            <p>Crea tu cuenta gratuita y empieza a controlar tu consumo en menos de 5 minutos</p>
+          </div>
+          
+          <form id="registerForm" class="register-form">
+            <div class="input-group">
+              <input type="text" placeholder="Nombre completo" required>
+            </div>
+            <div class="input-group">
+              <input type="email" placeholder="Correo electrónico" required>
+            </div>
+            <div class="input-group">
+              <input type="password" placeholder="Contraseña segura" required>
+            </div>
+            
+            <button type="submit" class="btn-primary btn-full">
+              <span>Crear cuenta</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </form>
+          
+          <div class="register-footer">
+            <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
