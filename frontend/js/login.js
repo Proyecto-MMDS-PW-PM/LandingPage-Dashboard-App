@@ -45,12 +45,7 @@ loginForm.addEventListener('submit', async function (e) {
       body: JSON.stringify({ email, password }),
     });
 
-    const result = await pool.query(
-      'INSERT INTO usuarios (nombre, email, password) VALUES ($1, $2, $3) RETURNING *',
-      [userName, email, hashedPassword]
-    );
-
-    console.log("Usuario creado:", result.rows[0]);
+    const result = await response.json();
 
     if (response.ok && result.token) {
       localStorage.setItem('token', result.token);

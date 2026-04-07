@@ -13,14 +13,14 @@ router.post('/', async (req, res) => {
     );
 
     if (resultado.rows.length === 0) {
-      return res.status(401).json({ mensaje: 'Credenciales incorrectas.' });
+      return res.status(401).json({ message: 'Credenciales incorrectas.' });
     }
 
     const usuario = resultado.rows[0];
     const passwordValido = await bcrypt.compare(password, usuario.password);
 
     if (!passwordValido) {
-      return res.status(401).json({ mensaje: 'Credenciales incorrectas.' });
+      return res.status(401).json({ message: 'Credenciales incorrectas.' });
     }
 
     const token = jwt.sign(
@@ -29,11 +29,11 @@ router.post('/', async (req, res) => {
       { expiresIn: '24h' }
     );
 
-    res.json({ mensaje: 'Login exitoso.', token });
+    res.json({ message: 'Login exitoso.', token });
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ mensaje: 'Error en el servidor.' });
+    res.status(500).json({ message: 'Error en el servidor.' });
   }
 });
 

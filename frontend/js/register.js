@@ -53,9 +53,14 @@ document.getElementById('registerForm').addEventListener('submit', async functio
       const result = await response.json();
 
       if (response.ok) {
-        registerMessage.textContent = result.message || 'Registro exitoso.';
+        registerMessage.textContent = result.message || 'Registro exitoso. Redirigiendo...';
         registerMessage.classList.add('success');
         document.getElementById('registerForm').reset();
+        
+        // Redirigir automaticamente al dashboard despues de 1.5 segundos
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 1500);
       } else {
         const msg = result.message || 'Error al registrar, intenta de nuevo.';
 
