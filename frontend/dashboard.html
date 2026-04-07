@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - AquAti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-layout">
+  <aside class="sidebar">
+    <h2>AquAti</h2>
+    
+    <p style="opacity: 0.5; font-size: 0.75em; margin: 30px 0 15px; text-transform: uppercase; letter-spacing: 1px;">Panel de Control</p>
+    
+    <nav>
+      <div class="sidebar-nav-item active">
+        <span>📊</span>
+        <span>Resumen</span>
+      </div>
+      <div class="sidebar-nav-item">
+        <span>📈</span>
+        <span>Historial</span>
+      </div>
+      <div class="sidebar-nav-item">
+        <span>📡</span>
+        <span>Dispositivos</span>
+      </div>
+      <div class="sidebar-nav-item">
+        <span>⚙️</span>
+        <span>Configuración</span>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+      <header class="page-header">
+        <div>
+          <h1 id="userGreeting">Hola, Usuario 👋</h1>
+          <p style="color: #94a3b8; margin-top: 5px;">Bienvenido de nuevo a tu panel</p>
+        </div>
+        <div class="user-info">
+          <button type="button" class="btn-cerrarS">Cerrar sesión</button>
+        </div>
+      </header>
+
+    <div class="cards-grid">
+      <div class="stat-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <h4>Litros totales</h4>
+            <div class="value" data-target="12345">0</div>
+          </div>
+          <div style="font-size: 2em; opacity: 0.8;">💧</div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <h4>Litros hoy</h4>
+            <div class="value" data-target="450">0</div>
+          </div>
+          <div style="font-size: 2em; opacity: 0.8;">📅</div>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <h4>Calidad del Agua</h4>
+            <div class="value" style="color: var(--secondary);">Óptima</div>
+          </div>
+          <div style="font-size: 2em; opacity: 0.8;">✅</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <h4>📈 Consumo Semanal</h4>
+      <canvas id="dashboardChart"></canvas>
+    </div>
+  </main>
+
+  <script>
+    // Animación de números (Counters)
+    const counters = document.querySelectorAll('.value[data-target]');
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const speed = 200;
+      const updateCount = () => {
+        const count = +counter.innerText;
+        const inc = target / speed;
+        if (count < target) {
+          counter.innerText = Math.ceil(count + inc);
+          setTimeout(updateCount, 1);
+        } else {
+          counter.innerText = target.toLocaleString() + ' L';
+        }
+      };
+      setTimeout(updateCount, 300);
+    });
+
+    // Chart.js con animación suave
+    const ctx = document.getElementById('dashboardChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+        datasets: [{
+          label: 'Consumo (Litros)',
+          data: [350, 420, 380, 500, 450, 600, 480],
+          borderColor: '#007bff',
+          backgroundColor: 'rgba(0, 123, 255, 0.15)',
+          borderWidth: 3,
+          fill: true,
+          tension: 0.4,
+          pointBackgroundColor: '#007bff',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            grid: {
+              color: 'rgba(255,255,255,0.05)'
+            },
+            ticks: {
+              color: '#94a3b8'
+            }
+          },
+          y: {
+            grid: {
+              color: 'rgba(255,255,255,0.05)'
+            },
+            ticks: {
+              color: '#94a3b8'
+            }
+          }
+        },
+        animation: {
+          duration: 2000,
+          easing: 'easeOutQuart'
+        }
+      }
+    });
+
+    // Mostrar nombre del usuario autenticado
+    const userName = localStorage.getItem('userName');
+    const displayName = userName ? userName : 'Usuario';
+    document.getElementById('userGreeting').textContent = `Hola, ${displayName} 👋`;
+
+    // Funcionalidad cerrar sesión
+    document.querySelector('.btn-cerrarS').addEventListener('click', function() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userEmail');
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>

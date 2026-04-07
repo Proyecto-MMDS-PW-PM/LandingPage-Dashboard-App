@@ -1,6 +1,6 @@
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://landingpage-dashboard-app-production.up.railway.app/api';
 
-document.getElementById('registerForm').addEventListener('submit', async function(e) {
+document.getElementById('registerForm').addEventListener('submit', async function (e) {
   e.preventDefault();
 
   // Reset errors
@@ -53,9 +53,19 @@ document.getElementById('registerForm').addEventListener('submit', async functio
       const result = await response.json();
 
       if (response.ok) {
-        registerMessage.textContent = result.message || 'Registro exitoso.';
+        registerMessage.textContent = result.message || 'Registro exitoso. Redirigiendo...';
         registerMessage.classList.add('success');
         document.getElementById('registerForm').reset();
+        
+        // Guardar datos del usuario recien registrado
+        localStorage.setItem('userName', name);
+        localStorage.setItem('userEmail', email);
+        if (result.token) localStorage.setItem('token', result.token);
+        
+        // Redirigir automaticamente al dashboard despues de 1.5 segundos
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 1500);
       } else {
         const msg = result.message || 'Error al registrar, intenta de nuevo.';
 
