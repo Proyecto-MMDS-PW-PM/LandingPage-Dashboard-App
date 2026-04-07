@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
       { expiresIn: '24h' }
     );
 
-    res.json({ message: 'Login exitoso.', token });
+    res.json({ message: 'Login exitoso.', token, name: usuario.nombre, email: usuario.email });
 
   } catch (error) {
     console.error(error);

@@ -57,6 +57,11 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         registerMessage.classList.add('success');
         document.getElementById('registerForm').reset();
         
+        // Guardar datos del usuario recien registrado
+        localStorage.setItem('userName', name);
+        localStorage.setItem('userEmail', email);
+        if (result.token) localStorage.setItem('token', result.token);
+        
         // Redirigir automaticamente al dashboard despues de 1.5 segundos
         setTimeout(() => {
           window.location.href = 'dashboard.html';

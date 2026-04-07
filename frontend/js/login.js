@@ -49,6 +49,8 @@ loginForm.addEventListener('submit', async function (e) {
 
     if (response.ok && result.token) {
       localStorage.setItem('token', result.token);
+      localStorage.setItem('userName', result.name);
+      localStorage.setItem('userEmail', result.email);
       window.location.href = 'dashboard.html';
       return;
     }
