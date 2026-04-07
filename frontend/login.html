@@ -3,47 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Página de inicio de sesión">
-  <title>Iniciar sesión</title>
+  <title>Iniciar Sesión - AquAti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
-  <header>
-    <div class="container">
-      <h1>Iniciar Sesión</h1>
-      <p>Accede a tu cuenta para continuar.</p>
+<body class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo">💧</div>
+      <h2>Bienvenido de nuevo</h2>
+      <p>Ingresa a tu panel de control AquAti</p>
     </div>
-  </header>
-
-  <main>
-    <section class="registro">
-      <div class="container">
-        <h3>Login</h3>
-        <form id="loginForm">
-          <div>
-            <label for="email">Correo electrónico:</label>
-            <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
-            <span class="error" id="emailError"></span>
-          </div>
-          <div>
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" placeholder="Tu contraseña" required>
-            <span class="error" id="passwordError"></span>
-          </div>
-          <button type="submit">Iniciar sesión</button>
-          <div id="loginMessage" class="form-message"></div>
-        </form>
-        <p style="margin-top: 15px;">¿No tienes cuenta? <a href="index.html">Regístrate aquí</a></p>
+    
+    <form id="loginForm" class="login-form">
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" placeholder="tu@correo.com" required>
       </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p>&copy; 2026 LandingPage Dashboard App.</p>
+      
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" placeholder="••••••••" required>
+      </div>
+      
+      <button type="submit" class="btn-login-modern">
+        <span>Iniciar sesión</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </form>
+    
+    <div class="login-footer">
+      <p>¿No tienes cuenta aún? <a href="index.html">Crea una cuenta gratis</a></p>
     </div>
-  </footer>
+  </div>
 
-  <script src="js/login.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      window.location.href = 'dashboard.html';
+    });
+  </script>
 </body>
 </html>

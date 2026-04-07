@@ -1,79 +1,114 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Landing básica HUD 01">
-  <title>Landing Básica HU01</title>
+  <title>AquAti - Ahorro Inteligente</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
-  <header>
+  <header class="hero">
     <div class="container">
-      <h1>Landing Básica</h1>
-      <p>Bienvenido a la demo de la historia de usuario HU01</p>
+      <h2>Protege cada gota con AquAti</h2>
+      <p>Monitoreo inteligente en tiempo real para tu hogar o empresa.</p>
+      <button onclick="document.getElementById('registro').scrollIntoView({behavior: 'smooth'})">Comienza Ahora</button>
     </div>
   </header>
 
   <main>
-    <section id="hero" class="hero">
-      <div class="container">
-        <h2>Descubre el Futuro</h2>
-        <p>Transforma tu experiencia con nuestra solución innovadora.</p>
-        <button>Comienza Ahora</button>
+    <section class="reveal container intro-section">
+      <div class="intro-content">
+        <h3 class="section-title">¿Por qué AquAti?</h3>
+        <p class="intro-text">El desperdicio de agua es un problema global que AquAti soluciona mediante tecnología IoT.
+        Más de <span class="highlight-text">30%</span> del agua potable se pierde diariamente en fugas sin detectar.
+        Nosotros cambiamos eso.</p>
+        
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Precisión medición</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Monitoreo continuo</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">-40%</div>
+            <div class="stat-label">Ahorro promedio</div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="features" class="features">
+    <section class="reveal section-grey">
       <div class="container">
-        <h3>Características</h3>
-        <ul>
-          <li>Diseño responsivo</li>
-          <li>Rápida navegación</li>
-          <li>Fácil de implementar</li>
-        </ul>
+        <h3 class="section-title">Tecnología de Vanguardia</h3>
+        <p class="section-subtitle">Soluciones inteligentes para el control del agua</p>
+        
+        <div class="features-grid">
+          <div class="feature-card card">
+            <div class="feature-icon">📡</div>
+            <h4>Sensores IoT</h4>
+            <p>Medición de precisión en tiempo real con tecnología de última generación</p>
+          </div>
+          
+          <div class="feature-card card">
+            <div class="feature-icon">🔔</div>
+            <h4>Alertas WiFi</h4>
+            <p>Notificaciones instantáneas directamente a tu dispositivo ante cualquier anomalía</p>
+          </div>
+          
+          <div class="feature-card card">
+            <div class="feature-icon">📱</div>
+            <h4>App Control</h4>
+            <p>Gestiona y monitorea todo tu sistema desde cualquier lugar con tu móvil</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="problema" class="problema">
+    <section id="registro" class="reveal register-section">
       <div class="container">
-        <h3>El Problema</h3>
-        <p>El desperdicio de agua es un problema global que afecta a millones de personas. En muchos hogares y empresas, el agua se malgasta sin control, lo que lleva a escasez y altos costos.</p>
-      </div>
-    </section>
-
-    <section id="solucion" class="solucion">
-      <div class="container">
-        <h3>Nuestra Solución: AquAti</h3>
-        <p>AquAti es un sistema inteligente de monitoreo y control del agua que utiliza tecnología IoT para optimizar el uso del recurso hídrico en tiempo real.</p>
-      </div>
-    </section>
-
-    <section id="tecnologia" class="tecnologia">
-      <div class="container">
-        <h3>Tecnología</h3>
-        <ul>
-          <li>Arduino: Microcontrolador para sensores</li>
-          <li>WiFi: Conectividad inalámbrica</li>
-          <li>Sensores: Medición precisa del flujo de agua</li>
-          <li>App móvil: Control remoto</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="beneficios" class="beneficios">
-      <div class="container">
-        <h3>Beneficios</h3>
-        <ul>
-          <li>Ahorro de agua hasta un 30%</li>
-          <li>Reducción de costos en facturas</li>
-          <li>Monitoreo en tiempo real</li>
-          <li>Fácil instalación y uso</li>
-        </ul>
+        <div class="register-card card-glow">
+          <div class="register-header">
+            <div class="icon-box">🚀</div>
+            <h3>Comienza hoy mismo</h3>
+            <p>Crea tu cuenta gratuita y empieza a controlar tu consumo en menos de 5 minutos</p>
+          </div>
+          
+          <form id="registerForm" class="register-form">
+            <div class="input-group">
+              <input type="text" placeholder="Nombre completo" required>
+            </div>
+            <div class="input-group">
+              <input type="email" placeholder="Correo electrónico" required>
+            </div>
+            <div class="input-group">
+              <input type="password" placeholder="Contraseña segura" required>
+            </div>
+            
+            <button type="submit" class="btn-primary btn-full">
+              <span>Crear cuenta</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </form>
+          
+          <div class="register-footer">
+            <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
+<<<<<<< HEAD
   <section id="registro" class="registro">
     <div class="container">
       <h3>Registro</h3>
@@ -102,14 +137,30 @@
       </form>
     </div>
   </section>
+=======
+  <script>
+  function reveal() {
+    var reveals = document.querySelectorAll(".reveal");
+    var windowHeight = window.innerHeight;
+    var elementVisible = 150;
+>>>>>>> 5582c5507c9d2c687706ae3335fbd7c0f9e03b11
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2026 LandingPage Dashboard App.</p>
-    </div>
-  </footer>
+    for (var i = 0; i < reveals.length; i++) {
+      var elementTop = reveals[i].getBoundingClientRect().top;
 
-  <script src="js/app.js"></script>
-  <script src="js/register.js"></script>
+      if (elementTop < windowHeight - elementVisible) {
+        // El elemento está dentro del área visible → añade la clase
+        reveals[i].classList.add("active");
+      } else {
+        // El elemento está fuera del área visible → quita la clase
+        reveals[i].classList.remove("active");
+      }
+    }
+  }
+
+  window.addEventListener("scroll", reveal);
+  reveal(); // ejecutar al cargar la página
+</script>
 </body>
+
 </html>
