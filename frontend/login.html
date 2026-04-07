@@ -20,13 +20,20 @@
     <form id="loginForm" class="login-form">
       <div class="form-group">
         <label>Correo electrónico</label>
-        <input type="email" placeholder="tu@correo.com" required>
+        <!-- ✅ Agregado id="email" -->
+        <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
       </div>
       
       <div class="form-group">
         <label>Contraseña</label>
-        <input type="password" placeholder="••••••••" required>
+        <!-- ✅ Agregado id="password" -->
+        <input type="password" id="password" name="password" placeholder="••••••••" required>
       </div>
+      
+      <!-- ✅ Contenedor para mensajes de error (ya existe en tu login.js) -->
+      <div id="emailError" class="error-message" style="color: red; font-size: 0.8em; margin-top: -10px;"></div>
+      <div id="passwordError" class="error-message" style="color: red; font-size: 0.8em;"></div>
+      <div id="loginMessage" class="form-message"></div>
       
       <button type="submit" class="btn-login-modern">
         <span>Iniciar sesión</span>
@@ -41,11 +48,7 @@
     </div>
   </div>
 
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      window.location.href = 'dashboard.html';
-    });
-  </script>
+  <!-- ✅ Cargar el script de login (eliminé el script interno que causaba el problema) -->
+  <script src="js/login.js"></script>
 </body>
 </html>
