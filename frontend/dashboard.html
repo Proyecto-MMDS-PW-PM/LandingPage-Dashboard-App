@@ -39,7 +39,7 @@
   <main class="main-content">
       <header class="page-header">
         <div>
-          <h1 id="userGreeting">Hola, Usuario 👋</h1>
+         <h1 id="userGreeting"></h1>
           <p style="color: #94a3b8; margin-top: 5px;">Bienvenido de nuevo a tu panel</p>
         </div>
         <div class="user-info">
@@ -86,6 +86,15 @@
   </main>
 
   <script>
+    // Mostrar nombre del usuario autenticado PRIMERO, antes que cualquier otra cosa
+    // Intentar multiples posibles claves para compatibilidad
+    const userName = localStorage.getItem('userName') 
+                    || localStorage.getItem('name') 
+                    || localStorage.getItem('nombre')
+                    || localStorage.getItem('usuario_nombre');
+    const displayName = userName && userName.trim() !== '' ? userName.trim() : 'Usuario';
+    document.getElementById('userGreeting').textContent = `Hola, ${displayName} 👋`;
+
     // Animación de números (Counters)
     const counters = document.querySelectorAll('.value[data-target]');
     counters.forEach(counter => {
@@ -156,11 +165,6 @@
         }
       }
     });
-
-    // Mostrar nombre del usuario autenticado
-    const userName = localStorage.getItem('userName');
-    const displayName = userName ? userName : 'Usuario';
-    document.getElementById('userGreeting').textContent = `Hola, ${displayName} 👋`;
 
     // Funcionalidad cerrar sesión
     document.querySelector('.btn-cerrarS').addEventListener('click', function() {
