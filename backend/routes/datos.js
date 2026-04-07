@@ -14,15 +14,12 @@ router.get('/', (req, res) => {
     const usuario = jwt.verify(token, process.env.JWT_SECRET);
 
     const datos = {
-      usuario: usuario.email,
-      ultima_lectura: {
-        flujo: '3.5 L/min',
-        consumo_total: '120 L',
-        fecha: new Date().toISOString(),
-        estado: 'Normal'
-      }
+      litros_totales: 1250,        // Puede venir de BD o ser fijo por ahora
+      litros_hoy: 32,
+      calidad_agua: 94,
+      estado_filtro: "bueno",
+      alertas: []
     };
-
     res.json(datos);
 
   } catch (error) {
