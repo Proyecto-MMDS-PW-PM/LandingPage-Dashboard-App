@@ -180,8 +180,11 @@ async function cargarDatosHistoricos() {
         if (respuesta.ok && dashboardChart) {
             const datosHistoricos = await respuesta.json();
             
+            // Extraer solo los valores de litros para el gráfico
+            const valoresLitros = datosHistoricos.map(dia => dia.litros);
+            
             // Actualizar datos del gráfico con los últimos 7 días
-            dashboardChart.data.datasets[0].data = datosHistoricos;
+            dashboardChart.data.datasets[0].data = valoresLitros;
             dashboardChart.update();
         }
 
