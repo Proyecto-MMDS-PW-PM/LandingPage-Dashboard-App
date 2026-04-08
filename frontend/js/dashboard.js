@@ -181,7 +181,7 @@ async function cargarDatosHistoricos() {
             const datosHistoricos = await respuesta.json();
             
             // Extraer solo los valores de litros para el gráfico
-            const valoresLitros = datosHistoricos.map(dia => dia.litros);
+            const valoresLitros = datosHistoricos.map(dia => Number(dia.litros) || 0);
             
             // Actualizar datos del gráfico con los últimos 7 días
             dashboardChart.data.datasets[0].data = valoresLitros;
