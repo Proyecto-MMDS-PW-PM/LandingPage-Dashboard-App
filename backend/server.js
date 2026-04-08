@@ -17,6 +17,11 @@ app.use('/api/login', loginRoute);
 const datosRoute = require('./routes/datos');
 app.use('/api/datos', datosRoute);
 
+const historicoRoute = require('./routes/historico');
+app.use('/api/historico', historicoRoute);
+
+require('./simulador');
+
 // Puerto (IMPORTANTE para Railway)
 const PORT = process.env.PORT || 3000;
 
