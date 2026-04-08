@@ -1,4 +1,4 @@
-console.log('✅ login.js cargado correctamente');
+console.log(' login.js cargado correctamente');
 
 const API_URL = 'https://landingpage-dashboard-app-production.up.railway.app/api';
 
@@ -12,7 +12,7 @@ console.log('Elementos del formulario:', { loginForm, emailError, passwordError,
 
   loginForm.addEventListener('submit', async function (e) {
     e.preventDefault();
-    console.log('🔐 Evento submit disparado'); // Para confirmar que llega aquí
+    console.log(' Evento submit disparado'); // Para confirmar que llega aquí
 
     emailError.textContent = '';
     passwordError.textContent = '';
