@@ -41,13 +41,30 @@ router.get('/', async (req, res) => {
       return res.json(simulado);
     }
 
-    const historico = resultado.rows.map(row => ({
-      fecha: row.fecha.toISOString().split('T')[0],
-      litros: Math.round(row.litros),
-      calidad: Math.round(row.calidad)
+    // Después de obtener resultado.rows
+    const fechasRequeridas = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      fechasRequeridas.push(d.toISOString().split('T')[0]);
+    }
+
+    const mapDatos = new Map();
+    resultado.rows.forEach(row => {
+      const fechaStr = row.fecha.toISOString().split('T')[0];
+      mapDatos.set(fechaStr, {
+        litros: Math.round(row.litros),
+        calidad: Math.round(row.calidad)
+      });
+    });
+
+    const historicoCompleto = fechasRequeridas.map(fecha => ({
+      fecha,
+      litros: mapDatos.get(fecha)?.litros ?? 0,
+      calidad: mapDatos.get(fecha)?.calidad ?? 0
     }));
 
-    res.json(historico);
+    res.json(historicoCompleto);
 
   } catch (error) {
     console.error(error);
