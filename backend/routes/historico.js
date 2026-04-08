@@ -43,8 +43,10 @@ router.get('/', async (req, res) => {
 
     // Después de obtener resultado.rows
     const fechasRequeridas = [];
+    // Generar fechas en orden: hace 6 dias, hace 5 dias ... hasta hoy
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
+      d.setHours(12, 0, 0, 0); // Corregir problema de zona horaria
       d.setDate(d.getDate() - i);
       fechasRequeridas.push(d.toISOString().split('T')[0]);
     }
