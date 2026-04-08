@@ -104,10 +104,13 @@ async function cargarDatosDashboard() {
     }
 }
 
+// Variable global para la instancia del gráfico
+let dashboardChart;
+
 // Inicializar gráfico
 function inicializarGrafico(datosConsumo = [350, 420, 380, 500, 450, 600, 480]) {
     const ctx = document.getElementById('dashboardChart').getContext('2d');
-    new Chart(ctx, {
+    dashboardChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
@@ -159,6 +162,34 @@ function inicializarGrafico(datosConsumo = [350, 420, 380, 500, 450, 600, 480]) 
     });
 }
 
+// Cargar datos históricos de consumo
+async function cargarDatosHistoricos() {
+    const token = localStorage.getItem('token');
+    
+    if (!token) return;
+
+    try {
+        const respuesta = await fetch('https://landingpage-dashboard-app-production.up.railway.app/api/historico', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (respuesta.ok && dashboardChart) {
+            const datosHistoricos = await respuesta.json();
+            
+            // Actualizar datos del gráfico con los últimos 7 días
+            dashboardChart.data.datasets[0].data = datosHistoricos;
+            dashboardChart.update();
+        }
+
+    } catch (error) {
+        console.error('Error al cargar datos históricos:', error);
+    }
+}
+
 // Funcionalidad cerrar sesión
 document.querySelector('.btn-cerrarS').addEventListener('click', function() {
     localStorage.removeItem('token');
@@ -169,9 +200,12 @@ document.querySelector('.btn-cerrarS').addEventListener('click', function() {
 
 // Ejecutar cuando el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar gráfico primero
+    inicializarGrafico();
+    
     // Cargar datos desde la API
     cargarDatosDashboard();
     
-    // Inicializar gráfico
-    inicializarGrafico();
+    // Cargar datos históricos para actualizar el gráfico
+    cargarDatosHistoricos();
 });
