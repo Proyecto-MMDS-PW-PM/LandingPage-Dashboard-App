@@ -6,60 +6,61 @@ const pool = require('../db');
 router.get('/', async (req, res) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ mensaje: 'Token no proporcionado.' });
-  }
+  if (!token) return res.status(401).json({ mensaje: 'Token no proporcionado.' });
 
   try {
     const usuario = jwt.verify(token, process.env.JWT_SECRET);
 
+    // Fechas en UTC: desde hace 6 días hasta hoy
+    const hoyUTC = new Date();
+    hoyUTC.setUTCHours(0, 0, 0, 0);
+    const hace7Dias = new Date(hoyUTC);
+    hace7Dias.setUTCDate(hoyUTC.getUTCDate() - 6);
+
     const resultado = await pool.query(
       `SELECT 
-        DATE(timestamp) as fecha,
+        (timestamp AT TIME ZONE 'America/Mexico_City')::date as fecha,
         SUM(litros_dia) as litros,
         AVG(calidad_agua) as calidad
-       FROM lecturas
-       WHERE usuario_id = $1
-         AND timestamp >= NOW() - INTERVAL '7 days'
-       GROUP BY DATE(timestamp)
-       ORDER BY fecha ASC`,
-      [usuario.id]
+      FROM lecturas
+      WHERE usuario_id = $1
+        AND timestamp >= (NOW() AT TIME ZONE 'America/Mexico_City') - INTERVAL '7 days'
+      GROUP BY fecha
+      ORDER BY fecha ASC`,
+      [usuario.id, hace7Dias]
     );
 
-    if (resultado.rows.length === 0) {
-      const hoy = new Date();
-      const simulado = Array.from({ length: 7 }, (_, i) => {
-        const fecha = new Date(hoy);
-        fecha.setDate(hoy.getDate() - (6 - i));
-        return {
-          fecha: fecha.toISOString().split('T')[0],
-          litros: Math.floor(Math.random() * 200 + 300),
-          calidad: Math.floor(Math.random() * 20 + 75)
-        };
-      });
-      return res.json(simulado);
+    // Generar las 7 fechas requeridas en UTC (formato YYYY-MM-DD)
+    // Función para obtener fecha en formato YYYY-MM-DD en la zona horaria local de México
+    function getLocalDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
     }
 
-    // Después de obtener resultado.rows
+    const hoyLocal = new Date(); // ya está en la zona horaria del servidor (si configuraste bien)
     const fechasRequeridas = [];
-    // Generar fechas en orden: hace 6 dias, hace 5 dias ... hasta hoy
     for (let i = 6; i >= 0; i--) {
-      const d = new Date();
-      d.setHours(12, 0, 0, 0); // Corregir problema de zona horaria
-      d.setDate(d.getDate() - i);
-      fechasRequeridas.push(d.toISOString().split('T')[0]);
+      const d = new Date(hoyLocal);
+      d.setDate(hoyLocal.getDate() - i);
+      fechasRequeridas.push(getLocalDate(d));
     }
 
+    // Mapear los datos de la BD
     const mapDatos = new Map();
     resultado.rows.forEach(row => {
-      const fechaStr = row.fecha.toISOString().split('T')[0];
+      // row.fecha ya es string (porque ::date devuelve date, pero pg lo convierte a Date)
+      const fechaStr = row.fecha instanceof Date
+        ? row.fecha.toISOString().split('T')[0]
+        : row.fecha;
       mapDatos.set(fechaStr, {
         litros: Math.round(row.litros),
         calidad: Math.round(row.calidad)
       });
     });
 
+    // Construir el array completo (rellenando con ceros donde no haya datos)
     const historicoCompleto = fechasRequeridas.map(fecha => ({
       fecha,
       litros: mapDatos.get(fecha)?.litros ?? 0,
@@ -67,7 +68,6 @@ router.get('/', async (req, res) => {
     }));
 
     res.json(historicoCompleto);
-
   } catch (error) {
     console.error(error);
     res.status(403).json({ mensaje: 'Token inválido o expirado.' });
