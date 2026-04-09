@@ -46,20 +46,14 @@ document.addEventListener('DOMContentLoaded', function () {
       const tipoCell = document.createElement('td');
       tipoCell.style.padding = '12px 15px';
       const tipoBadge = document.createElement('span');
-      tipoBadge.style.padding = '4px 10px';
-      tipoBadge.style.borderRadius = '6px';
-      tipoBadge.style.fontSize = '0.85rem';
-      tipoBadge.style.fontWeight = '500';
+      tipoBadge.classList.add('alerta-badge');
       
       if (alerta.tipo === 'Advertencia') {
-        tipoBadge.style.backgroundColor = 'rgba(251, 191, 36, 0.2)';
-        tipoBadge.style.color = '#fbbf24';
+        tipoBadge.classList.add('alerta-advertencia');
       } else if (alerta.tipo === 'Error') {
-        tipoBadge.style.backgroundColor = 'rgba(239, 68, 68, 0.2)';
-        tipoBadge.style.color = '#ef4444';
+        tipoBadge.classList.add('alerta-error');
       } else {
-        tipoBadge.style.backgroundColor = 'rgba(59, 130, 246, 0.2)';
-        tipoBadge.style.color = '#3b82f6';
+        tipoBadge.classList.add('alerta-informacion');
       }
       tipoBadge.textContent = alerta.tipo;
       tipoCell.appendChild(tipoBadge);

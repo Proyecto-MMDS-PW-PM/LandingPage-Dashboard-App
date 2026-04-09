@@ -87,27 +87,23 @@
     </div>
 
     <!-- Sección de Alertas -->
-    <div class="alerts-section" style="margin-top: 30px;">
-      <h4 style="margin-bottom: 20px; color: #e2e8f0; font-size: 1.2rem;">⚠️ Alertas Recientes</h4>
+    <div class="alerts-section">
+      <h4>⚠️ Alertas Recientes</h4>
 
-      <div class="alerts-table-container"
-        style="background: rgba(30, 41, 59, 0.5); border-radius: 12px; padding: 20px; overflow-x: auto;">
-        <table id="alertsTable" style="width: 100%; border-collapse: collapse;">
+      <div class="alerts-table-container">
+        <table id="alertsTable">
           <thead>
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-              <th style="text-align: left; padding: 12px 15px; color: #94a3b8; font-weight: 500; font-size: 0.9rem;">
-                Fecha</th>
-              <th style="text-align: left; padding: 12px 15px; color: #94a3b8; font-weight: 500; font-size: 0.9rem;">
-                Tipo de alerta</th>
-              <th style="text-align: left; padding: 12px 15px; color: #94a3b8; font-weight: 500; font-size: 0.9rem;">
-                Descripción</th>
+            <tr>
+              <th>Fecha</th>
+              <th>Tipo de alerta</th>
+              <th>Descripción</th>
             </tr>
           </thead>
           <tbody id="alertsTableBody">
             <!-- Las filas se insertarán dinámicamente aquí -->
           </tbody>
         </table>
-        <div id="noAlertsMessage" style="text-align: center; padding: 30px; color: #64748b; display: none;">
+        <div id="noAlertsMessage">
           No hay alertas recientes
         </div>
       </div>
