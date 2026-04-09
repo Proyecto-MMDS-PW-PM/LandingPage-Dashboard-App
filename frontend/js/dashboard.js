@@ -76,23 +76,25 @@ document.addEventListener('DOMContentLoaded', function () {
     const ctx = document.getElementById('dashboardChart').getContext('2d');
     if (chartInstance) chartInstance.destroy();
 
-    // Si no hay datos, mostrar valores por defecto
-    if (!historico || historico.length === 0) {
-      historico = [
-        { fecha: new Date().toISOString().split('T')[0], litros: 0 }
-      ];
+    // Generar los 7 dias de la semana siempre
+    const diasSemana = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+    
+    // Si no hay datos, usar valores por defecto para toda la semana
+    let datosLitros = [0, 0, 0, 0, 0, 0, 0];
+    
+    if (historico && historico.length > 0) {
+      // Rellenar datos que vienen del servidor
+      historico.forEach((item, index) => {
+        if (index < 7) {
+          datosLitros[index] = Math.max(0, item.litros || 0);
+        }
+      });
     }
-
-    const labels = historico.map(item => {
-      const fecha = new Date(item.fecha);
-      return fecha.toLocaleDateString('es-ES', { weekday: 'short' });
-    });
-    const datosLitros = historico.map(item => item.litros || 0);
 
     chartInstance = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: labels,
+        labels: diasSemana,
         datasets: [{
           label: 'Litros filtrados',
           data: datosLitros,
@@ -113,7 +115,12 @@ document.addEventListener('DOMContentLoaded', function () {
         plugins: { legend: { display: false } },
         scales: {
           x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
-          y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+          y: { 
+            min: 0,
+            beginAtZero: true,
+            grid: { color: 'rgba(255,255,255,0.05)' }, 
+            ticks: { color: '#94a3b8' } 
+          }
         },
         animation: { duration: 1500, easing: 'easeOutQuart' }
       }
