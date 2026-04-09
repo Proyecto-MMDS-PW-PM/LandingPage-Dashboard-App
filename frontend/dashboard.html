@@ -83,96 +83,32 @@
       <h4>📈 Consumo Semanal</h4>
       <canvas id="dashboardChart"></canvas>
     </div>
+
+    <!-- Sección de Alertas -->
+    <div class="alerts-section" style="margin-top: 30px;">
+      <h4 style="margin-bottom: 20px; color: #e2e8f0; font-size: 1.2rem;">⚠️ Alertas Recientes</h4>
+      
+      <div class="alerts-table-container" style="background: rgba(30, 41, 59, 0.5); border-radius: 12px; padding: 20px; overflow-x: auto;">
+        <table id="alertsTable" style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <th style="text-align: left; padding: 12px 15px; color: #94a3b8; font-weight: 500; font-size: 0.9rem;">Fecha</th>
+              <th style="text-align: left; padding: 12px 15px; color: #94a3b8; font-weight: 500; font-size: 0.9rem;">Tipo de alerta</th>
+              <th style="text-align: left; padding: 12px 15px; color: #94a3b8; font-weight: 500; font-size: 0.9rem;">Descripción</th>
+            </tr>
+          </thead>
+          <tbody id="alertsTableBody">
+            <!-- Las filas se insertarán dinámicamente aquí -->
+          </tbody>
+        </table>
+        <div id="noAlertsMessage" style="text-align: center; padding: 30px; color: #64748b; display: none;">
+          No hay alertas recientes
+        </div>
+      </div>
+    </div>
+
   </main>
 
-  <script>
-    // Mostrar nombre del usuario autenticado PRIMERO, antes que cualquier otra cosa
-    // Intentar multiples posibles claves para compatibilidad
-    const userName = localStorage.getItem('userName') 
-                    || localStorage.getItem('name') 
-                    || localStorage.getItem('nombre')
-                    || localStorage.getItem('usuario_nombre');
-    const displayName = userName && userName.trim() !== '' ? userName.trim() : 'Usuario';
-    document.getElementById('userGreeting').textContent = `Hola, ${displayName} 👋`;
-
-    // Animación de números (Counters)
-    const counters = document.querySelectorAll('.value[data-target]');
-    counters.forEach(counter => {
-      const target = +counter.getAttribute('data-target');
-      const speed = 200;
-      const updateCount = () => {
-        const count = +counter.innerText;
-        const inc = target / speed;
-        if (count < target) {
-          counter.innerText = Math.ceil(count + inc);
-          setTimeout(updateCount, 1);
-        } else {
-          counter.innerText = target.toLocaleString() + ' L';
-        }
-      };
-      setTimeout(updateCount, 300);
-    });
-
-    // Chart.js con animación suave
-    const ctx = document.getElementById('dashboardChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
-        datasets: [{
-          label: 'Consumo (Litros)',
-          data: [350, 420, 380, 500, 450, 600, 480],
-          borderColor: '#007bff',
-          backgroundColor: 'rgba(0, 123, 255, 0.15)',
-          borderWidth: 3,
-          fill: true,
-          tension: 0.4,
-          pointBackgroundColor: '#007bff',
-          pointBorderColor: '#fff',
-          pointBorderWidth: 2,
-          pointRadius: 6
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          x: {
-            grid: {
-              color: 'rgba(255,255,255,0.05)'
-            },
-            ticks: {
-              color: '#94a3b8'
-            }
-          },
-          y: {
-            grid: {
-              color: 'rgba(255,255,255,0.05)'
-            },
-            ticks: {
-              color: '#94a3b8'
-            }
-          }
-        },
-        animation: {
-          duration: 2000,
-          easing: 'easeOutQuart'
-        }
-      }
-    });
-
-    // Funcionalidad cerrar sesión
-    document.querySelector('.btn-cerrarS').addEventListener('click', function() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('userName');
-      localStorage.removeItem('userEmail');
-      window.location.href = 'login.html';
-    });
-  </script>
+  <script src="js/dashboard.js"></script>
 </body>
 </html>
