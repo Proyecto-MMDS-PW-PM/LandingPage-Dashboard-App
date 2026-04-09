@@ -2,8 +2,8 @@ const API_URL = 'https://landingpage-dashboard-app-production.up.railway.app/api
 
 document.addEventListener('DOMContentLoaded', function () {
   // --- Mostrar nombre del usuario ---
-  const userName = localStorage.getItem('userName') 
-    || localStorage.getItem('name') 
+  const userName = localStorage.getItem('userName')
+    || localStorage.getItem('name')
     || localStorage.getItem('nombre')
     || localStorage.getItem('usuario_nombre');
   const displayName = userName && userName.trim() !== '' ? userName.trim() : 'Usuario';
@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // --- Referencias a elementos del DOM ---
-  const litrosTotalesElem = document.getElementById('litrosTotales');
-  const litrosHoyElem = document.getElementById('litrosHoy');
-  const calidadAguaElem = document.getElementById('calidadAgua');
+  const litrosTotalesElem = document.getElementById('litrosTotalesElem');
+  const litrosHoyElem = document.getElementById('litrosHoyElem');
+  const calidadAguaElem = document.getElementById('calidadAguaElem');
   const btnCerrar = document.querySelector('.btn-cerrarS');
 
   // --- Función para renderizar alertas ---
@@ -37,17 +37,17 @@ document.addEventListener('DOMContentLoaded', function () {
     alertas.forEach(alerta => {
       const row = document.createElement('tr');
       row.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
-      
+
       const fechaCell = document.createElement('td');
       fechaCell.style.padding = '12px 15px';
       fechaCell.style.color = '#cbd5e1';
       fechaCell.textContent = alerta.fecha;
-      
+
       const tipoCell = document.createElement('td');
       tipoCell.style.padding = '12px 15px';
       const tipoBadge = document.createElement('span');
       tipoBadge.classList.add('alerta-badge');
-      
+
       if (alerta.tipo === 'Advertencia') {
         tipoBadge.classList.add('alerta-advertencia');
       } else if (alerta.tipo === 'Error') {
@@ -57,12 +57,12 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       tipoBadge.textContent = alerta.tipo;
       tipoCell.appendChild(tipoBadge);
-      
+
       const descripcionCell = document.createElement('td');
       descripcionCell.style.padding = '12px 15px';
       descripcionCell.style.color = '#cbd5e1';
       descripcionCell.textContent = alerta.descripcion;
-      
+
       row.appendChild(fechaCell);
       row.appendChild(tipoCell);
       row.appendChild(descripcionCell);
@@ -78,10 +78,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Generar los 7 dias de la semana siempre
     const diasSemana = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
-    
+
     // Si no hay datos, usar valores por defecto para toda la semana
     let datosLitros = [0, 0, 0, 0, 0, 0, 0];
-    
+
     if (historico && historico.length > 0) {
       // Rellenar datos que vienen del servidor
       historico.forEach((item, index) => {
@@ -115,11 +115,11 @@ document.addEventListener('DOMContentLoaded', function () {
         plugins: { legend: { display: false } },
         scales: {
           x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
-          y: { 
+          y: {
             min: 0,
             beginAtZero: true,
-            grid: { color: 'rgba(255,255,255,0.05)' }, 
-            ticks: { color: '#94a3b8' } 
+            grid: { color: 'rgba(255,255,255,0.05)' },
+            ticks: { color: '#94a3b8' }
           }
         },
         animation: { duration: 1500, easing: 'easeOutQuart' }
@@ -153,14 +153,34 @@ document.addEventListener('DOMContentLoaded', function () {
       if (litrosTotalesElem) litrosTotalesElem.innerText = litrosTotales.toLocaleString() + ' L';
       if (litrosHoyElem) litrosHoyElem.innerText = litrosHoy.toLocaleString() + ' L';
       if (calidadAguaElem) {
-        calidadAguaElem.innerText = calidad;
-        if (calidad.toLowerCase().includes('óptima') || calidad === 'Buena') {
-          calidadAguaElem.style.color = '#10b981';
-        } else if (calidad.toLowerCase().includes('media')) {
-          calidadAguaElem.style.color = '#f59e0b';
+        let calidadTexto = '';
+        let color = '#94a3b8'; // gris por defecto
+
+        if (typeof calidad === 'number') {
+          // Es un número, mostramos como porcentaje y definimos color según valor
+          calidadTexto = `${calidad}%`;
+          if (calidad >= 80) {
+            color = '#10b981'; // verde
+          } else if (calidad >= 50) {
+            color = '#f59e0b'; // naranja
+          } else {
+            color = '#ef4444'; // rojo
+          }
+        } else if (typeof calidad === 'string') {
+          calidadTexto = calidad;
+          if (calidad.toLowerCase().includes('óptima') || calidad.toLowerCase() === 'buena') {
+            color = '#10b981';
+          } else if (calidad.toLowerCase().includes('media')) {
+            color = '#f59e0b';
+          } else if (calidad.toLowerCase().includes('mala')) {
+            color = '#ef4444';
+          }
         } else {
-          calidadAguaElem.style.color = '#ef4444';
+          calidadTexto = 'Sin datos';
         }
+
+        calidadAguaElem.innerText = calidadTexto;
+        calidadAguaElem.style.color = color;
       }
 
       // Renderizar alertas
